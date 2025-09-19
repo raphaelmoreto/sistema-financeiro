@@ -1,0 +1,43 @@
+CREATE DATABASE Financas;
+
+USE Financas;
+
+CREATE TABLE Natureza (
+	id INT PRIMARY KEY IDENTITY(1,1),
+	natureza VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Natureza (natureza)
+			  VALUES ('DESPESAS'),
+					 ('RECEITAS');
+
+CREATE TABLE Categoria (
+	id INT PRIMARY KEY IDENTITY(1,1),
+	categoria VARCHAR(50) NOT NULL
+);
+
+INSERT INTO Categoria (categoria)
+			   VALUES ('ALIMENTACAO'),
+					  ('EDUCACAO'),
+					  ('LAZER'),
+					  ('RECEITAS'),
+					  ('SAUDE'),
+					  ('TRANSPORTE'),
+					  ('VESTUARIO');
+
+CREATE TABLE Transacao (
+	id INT PRIMARY KEY IDENTITY(1,1),
+	descricao VARCHAR(100) NOT NULL,
+	valor DECIMAL(18,2) NOT NULL,
+	data_transacao DATETIME NOT NULL,
+	fk_categoria INT NOT NULL,
+	fk_natureza INT NOT NULL
+);
+
+ALTER TABLE Transacao
+ADD CONSTRAINT fk_transacoes_categoria
+FOREIGN KEY (fk_categoria) REFERENCES Categoria (id);
+
+ALTER TABLE Transacao
+ADD CONSTRAINT fk_transacao_natureza
+FOREIGN KEY (fk_natureza) REFERENCES Natureza (id);
