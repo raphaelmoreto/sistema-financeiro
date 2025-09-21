@@ -15,6 +15,63 @@ namespace SistemaFinanceiro.API.Controllers
             this.categoriaServices = categoriaServices;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategoria([FromRoute] int id)
+        {
+            try
+            {
+                var result = await categoriaServices.DeletarCategoria(id);
+                return Ok(result);
+            }
+            catch (AggregateException aggEx)
+            {
+                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
+                return BadRequest(new { Erro = mensagens });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet("busca-por-id")]
+        public async Task<IActionResult> GetCategoriaPorId([FromQuery] int id)
+        {
+            try
+            {
+                var result = await categoriaServices.BuscarCategoriaPorId(id);
+                return Ok(result);
+            }
+            catch (AggregateException aggEx)
+            {
+                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
+                return BadRequest(new { erro = mensagens });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Getcategorias()
+        {
+            try
+            {
+                var result = await categoriaServices.BuscarCategorias();
+                return Ok(result);
+            }
+            catch (AggregateException aggEx)
+            {
+                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
+                return BadRequest(new { Erro = mensagens });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> PostCategoria(CategoriaInputDto categoriaInputDto)
         {
@@ -27,6 +84,25 @@ namespace SistemaFinanceiro.API.Controllers
             {
                 var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
                 return BadRequest(new { erro = mensagens });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutCategoria([FromRoute] int id, [FromBody] CategoriaInputDto categoriaInputDto)
+        {
+            try
+            {
+                var result = await categoriaServices.AtualizarCategoria(id, categoriaInputDto);
+                return Ok(result);
+            }
+            catch (AggregateException aggEx)
+            {
+                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
+                return BadRequest(new { Erro = mensagens });
             }
             catch (Exception ex)
             {

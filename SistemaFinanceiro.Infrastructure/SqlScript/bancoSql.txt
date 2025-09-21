@@ -13,17 +13,17 @@ INSERT INTO Natureza (natureza)
 
 CREATE TABLE Categoria (
 	id INT PRIMARY KEY IDENTITY(1,1),
-	categoria VARCHAR(50) NOT NULL
+	nome VARCHAR(50) NOT NULL
 );
 
-INSERT INTO Categoria (categoria)
-			   VALUES ('ALIMENTACAO'),
-					  ('EDUCACAO'),
+INSERT INTO Categoria (nome)
+			   VALUES ('ALIMENTAÇÃO'),
+					  ('EDUCAÇÃO'),
 					  ('LAZER'),
 					  ('RECEITAS'),
 					  ('SAUDE'),
 					  ('TRANSPORTE'),
-					  ('VESTUARIO');
+					  ('ROPAS E ACESSÓRIOS');
 
 CREATE TABLE Transacao (
 	id INT PRIMARY KEY IDENTITY(1,1),

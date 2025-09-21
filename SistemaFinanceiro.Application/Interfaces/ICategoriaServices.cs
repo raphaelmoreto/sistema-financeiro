@@ -1,10 +1,17 @@
 ﻿using SistemaFinanceiro.Application.Dtos;
-using SistemaFinanceiro.Domain.Entities;
 
 namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface ICategoriaServices
     {
-        Task<Categoria> CriarCategoria(CategoriaInputDto categoriaInputDto);
+        Task<CategoriaOutputDto> AtualizarCategoria(int id, CategoriaInputDto categoriaInputDto);
+
+        Task<CategoriaOutputDto> BuscarCategoriaPorId(int id);
+
+        Task<IEnumerable<CategoriaOutputDto>> BuscarCategorias();
+
+        Task<CategoriaOutputDto> CriarCategoria(CategoriaInputDto categoriaInputDto);
+
+        Task<bool> DeletarCategoria(int id);
     }
 }

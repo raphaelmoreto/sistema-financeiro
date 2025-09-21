@@ -1,7 +1,9 @@
-﻿using SistemaFinanceiro.Domain.Validation;
+﻿using Dapper.Contrib.Extensions;
+using SistemaFinanceiro.Domain.Validation;
 
 namespace SistemaFinanceiro.Domain.Entities
 {
+    [Table("Categoria")]
     public class Categoria : BaseEntity
     {
         public string Nome { get; private set; }
@@ -25,7 +27,7 @@ namespace SistemaFinanceiro.Domain.Entities
             if (nome == Nome)
                 return;
 
-            Nome = nome;
+            Nome = nome.ToUpper();
         }
 
         public void Validar()

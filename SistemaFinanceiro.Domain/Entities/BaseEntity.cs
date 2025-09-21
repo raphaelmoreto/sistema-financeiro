@@ -1,9 +1,11 @@
-﻿
+﻿using Dapper.Contrib.Extensions;
+
 namespace SistemaFinanceiro.Domain.Entities
 {
     public class BaseEntity
     {
-        public int Id { get; private set; }
+        [Key]
+        public int Id { get; protected set; }
 
         protected BaseEntity() { }
 
