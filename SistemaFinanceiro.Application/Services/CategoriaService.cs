@@ -42,7 +42,7 @@ namespace SistemaFinanceiro.Application.Services
             if (id <= 0)
                 throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
 
-            var categoria = await categoriaRepository.SearchCategoriaPorId(id);
+            var categoria = await categoriaRepository.SearchCategoriaById(id);
             if (categoria == null)
                 throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
 

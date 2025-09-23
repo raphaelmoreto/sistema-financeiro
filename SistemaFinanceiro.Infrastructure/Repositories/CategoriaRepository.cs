@@ -32,7 +32,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             return await connection.QueryAsync<CategoriaOutputDto>(sb.ToString());
         }
 
-        public async Task<CategoriaOutputDto?> SearchCategoriaPorId(int id)
+        public async Task<CategoriaOutputDto?> SearchCategoriaById(int id)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("SELECT id,");

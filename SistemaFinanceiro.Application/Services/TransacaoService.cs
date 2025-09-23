@@ -14,11 +14,14 @@ namespace SistemaFinanceiro.Application.Services
             this.transacaoRepository = transacaoRepository;
         }
 
-        public async Task<Transacao> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto)
+        public async Task<bool> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto)
         {
-            var transacao = await transacaoRepository.SelecionarTransacaoPorId(id);
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+
+            var transacao = await transacaoRepository.GetById(id);
             if (transacao == null)
-                throw new Exception("ERRO!");
+                throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
 
             transacao.AtribuirDescricao(transacaoInputDto.Descricao);
             transacao.AtribuirCategoria(transacaoInputDto.FkCategoria);
@@ -26,14 +29,32 @@ namespace SistemaFinanceiro.Application.Services
             transacao.Validar();
             transacao.AtribuirNatureza();
 
-            var result = await transacaoRepository.UpdateTransacao(id, transacao);
+            var result = await transacaoRepository.Update(transacao);
             if (!result)
                 throw new Exception("ERRO!");
+
+            return result;
+        }
+
+        public async Task<TransacaoOutputDto> BuscarTransacaoPorId(int id)
+        {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+
+            var transacao = await transacaoRepository.SearchTransacaoById(id);
+            if (transacao == null)
+                throw new ArgumentNullException("TRANSAÇÃO NÃO ENCONTRADA!");
 
             return transacao;
         }
 
-        public async Task<Transacao> CriarTransacao(TransacaoInputDto transacaoInputDto)
+        public async Task<IEnumerable<TransacaoOutputDto>> BuscarTransacoes()
+        {
+            var transacoes = await transacaoRepository.ListTransacoes();
+            return transacoes;
+        }
+
+        public async Task<bool> CriarTransacao(TransacaoInputDto transacaoInputDto)
         {
             var transacao = new Transacao
             (
@@ -42,11 +63,27 @@ namespace SistemaFinanceiro.Application.Services
                 transacaoInputDto.Valor
             );
 
-            var result = await transacaoRepository.InserirTransacao(transacao);
+            var result = await transacaoRepository.Insert(transacao);
             if (!result)
                 throw new Exception("ERRO!");
 
-            return transacao;
+            return result;
+        }
+
+        public async Task<bool> DeleteTransacao(int id)
+        {
+            if (id <= 0)
+                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+
+            var transacao = await transacaoRepository.GetById(id);
+            if (transacao == null)
+                throw new ArgumentNullException("TRANSAÇÃO NÃO ENCONTRADA!");
+
+            var result = await transacaoRepository.Delete(transacao);
+            if (!result)
+                throw new Exception("ERRO!");
+
+            return result;
         }
     }
 }

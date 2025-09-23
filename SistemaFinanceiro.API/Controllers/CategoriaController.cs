@@ -23,11 +23,6 @@ namespace SistemaFinanceiro.API.Controllers
                 var result = await categoriaServices.DeletarCategoria(id);
                 return Ok(result);
             }
-            catch (AggregateException aggEx)
-            {
-                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
-                return BadRequest(new { Erro = mensagens });
-            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -42,11 +37,6 @@ namespace SistemaFinanceiro.API.Controllers
                 var result = await categoriaServices.BuscarCategoriaPorId(id);
                 return Ok(result);
             }
-            catch (AggregateException aggEx)
-            {
-                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
-                return BadRequest(new { erro = mensagens });
-            }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
@@ -54,17 +44,12 @@ namespace SistemaFinanceiro.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Getcategorias()
+        public async Task<IActionResult> GetCategorias()
         {
             try
             {
                 var result = await categoriaServices.BuscarCategorias();
                 return Ok(result);
-            }
-            catch (AggregateException aggEx)
-            {
-                var mensagens = aggEx.InnerExceptions.Select(ex => ex.Message);
-                return BadRequest(new { Erro = mensagens });
             }
             catch (Exception ex)
             {

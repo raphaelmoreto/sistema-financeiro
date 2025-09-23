@@ -39,6 +39,7 @@ namespace SistemaFinanceiro.API
 
             //REPOSITORIES
             builder.Services.AddScoped<IBaseRepository<Categoria>, BaseRepository<Categoria>>();
+            builder.Services.AddScoped<IBaseRepository<Transacao>, BaseRepository<Transacao>>();
 
             var app = builder.Build();
 

@@ -1,19 +1,21 @@
-﻿using SistemaFinanceiro.Domain.Enum;
+﻿using Dapper.Contrib.Extensions;
+using SistemaFinanceiro.Domain.Enum;
 using SistemaFinanceiro.Domain.Validation;
 
 namespace SistemaFinanceiro.Domain.Entities
 {
+    [Table("Transacao")]
     public class Transacao : BaseEntity
     {
         public string Descricao { get; private set; } = string.Empty;
 
-        public int FkCategoria { get; private set; }
+        public int Fk_Categoria { get; private set; }
 
-        public ENaturezaTransacao Natureza { get; private set; }
+        public ENaturezaTransacao Fk_Natureza { get; private set; }
 
         public decimal Valor { get; private set; }
 
-        public DateTime DataTransacao { get; private set; }
+        public DateTime Data_Transacao { get; private set; }
 
         public Transacao() { }
 
@@ -26,7 +28,7 @@ namespace SistemaFinanceiro.Domain.Entities
             Validar();
 
             AtribuirNatureza();
-            DataTransacao = DateTime.Now;
+            Data_Transacao = DateTime.Now;
         }
 
         public void AtribuirCategoria(int fkCategoria)
@@ -37,10 +39,10 @@ namespace SistemaFinanceiro.Domain.Entities
                 return;
             }
 
-            if (fkCategoria == FkCategoria)
+            if (fkCategoria == Fk_Categoria)
                 return;
 
-            FkCategoria = fkCategoria;
+            Fk_Categoria = fkCategoria;
         }
 
         //public void AtualizarData(DateTime dataTransacao)
@@ -68,9 +70,9 @@ namespace SistemaFinanceiro.Domain.Entities
         public void AtribuirNatureza()
         {
             if (Valor < 0)
-                Natureza = ENaturezaTransacao.DESPESAS;
+                Fk_Natureza = ENaturezaTransacao.DESPESAS;
             else if (Valor > 0)
-                Natureza = ENaturezaTransacao.RECEITAS;
+                Fk_Natureza = ENaturezaTransacao.RECEITAS;
             else
                 return;
         }

@@ -9,6 +9,6 @@ namespace SistemaFinanceiro.Domain.Interfaces
 
         Task<IEnumerable<CategoriaOutputDto>> ListCategorias();
 
-        Task<CategoriaOutputDto?> SearchCategoriaPorId(int id);
+        Task<CategoriaOutputDto?> SearchCategoriaById(int id);
     }
 }

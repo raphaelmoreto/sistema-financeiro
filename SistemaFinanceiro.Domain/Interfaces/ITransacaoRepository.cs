@@ -1,17 +1,12 @@
-﻿using SistemaFinanceiro.Domain.Entities;
+﻿using SistemaFinanceiro.Domain.Dtos;
+using SistemaFinanceiro.Domain.Entities;
 
 namespace SistemaFinanceiro.Domain.Interfaces
 {
-    public interface ITransacaoRepository
+    public interface ITransacaoRepository : IBaseRepository<Transacao>
     {
-        Task<bool> UpdateTransacao(int id, Transacao transacao);
+        Task<IEnumerable<TransacaoOutputDto>> ListTransacoes();
 
-        Task<bool> DeletarTransacao(int id);
-
-        Task<bool> InserirTransacao(Transacao transacao);
-
-        Task<IEnumerable<Transacao>> ListarTransacoes();
-
-        Task<Transacao?> SelecionarTransacaoPorId(int id);
+        Task<TransacaoOutputDto?> SearchTransacaoById(int id);
     }
 }

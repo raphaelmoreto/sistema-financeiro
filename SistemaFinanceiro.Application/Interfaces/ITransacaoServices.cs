@@ -1,12 +1,17 @@
 ﻿using SistemaFinanceiro.Domain.Dtos;
-using SistemaFinanceiro.Domain.Entities;
 
 namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface ITransacaoServices
     {
-        Task<Transacao> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto);
+        Task<bool> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto);
 
-        Task<Transacao> CriarTransacao(TransacaoInputDto transacaoInputDto);
+        Task<TransacaoOutputDto> BuscarTransacaoPorId(int id);
+
+        Task<IEnumerable<TransacaoOutputDto>> BuscarTransacoes();
+
+        Task<bool> CriarTransacao(TransacaoInputDto transacaoInputDto);
+
+        Task<bool> DeleteTransacao(int id);
     }
 }
