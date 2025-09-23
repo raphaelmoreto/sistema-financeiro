@@ -1,5 +1,5 @@
 ﻿
-namespace SistemaFinanceiro.Application.Dtos
+namespace SistemaFinanceiro.Domain.Dtos
 {
     public record CategoriaInputDto(string Nome);
 

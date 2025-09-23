@@ -1,4 +1,4 @@
-﻿using SistemaFinanceiro.Application.Dtos;
+﻿using SistemaFinanceiro.Domain.Dtos;
 using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Domain.Entities;
 using SistemaFinanceiro.Domain.Interfaces;
@@ -42,22 +42,17 @@ namespace SistemaFinanceiro.Application.Services
             if (id <= 0)
                 throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
 
-            var categoria = await categoriaRepository.GetById(id);
+            var categoria = await categoriaRepository.SearchCategoriaPorId(id);
             if (categoria == null)
                 throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
 
-            return new CategoriaOutputDto(categoria.Id, categoria.Nome);
+            return categoria;
         }
 
         public async Task<IEnumerable<CategoriaOutputDto>> BuscarCategorias()
         {
-            List<CategoriaOutputDto> categoriasOutputDtos = [];
-
-            var categorias = await categoriaRepository.GetAll();
-            foreach (var categoria in categorias)
-                categoriasOutputDtos.Add(new CategoriaOutputDto(categoria.Id, categoria.Nome));
-
-            return categoriasOutputDtos;
+            var categorias = await categoriaRepository.ListCategorias();
+            return categorias;
         }
 
         public async Task<bool> CriarCategoria(CategoriaInputDto categoriaInputDto)

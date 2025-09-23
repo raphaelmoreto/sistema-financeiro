@@ -1,4 +1,4 @@
-﻿using SistemaFinanceiro.Application.Dtos;
+﻿using SistemaFinanceiro.Domain.Dtos;
 using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Domain.Entities;
 using SistemaFinanceiro.Domain.Interfaces;

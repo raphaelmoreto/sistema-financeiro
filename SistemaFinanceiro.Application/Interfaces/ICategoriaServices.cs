@@ -1,4 +1,4 @@
-﻿using SistemaFinanceiro.Application.Dtos;
+﻿using SistemaFinanceiro.Domain.Dtos;
 
 namespace SistemaFinanceiro.Application.Interfaces
 {

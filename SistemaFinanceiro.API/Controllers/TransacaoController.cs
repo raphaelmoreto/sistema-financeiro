@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemaFinanceiro.Application.Dtos;
+using SistemaFinanceiro.Domain.Dtos;
 using SistemaFinanceiro.Application.Interfaces;
 
 namespace SistemaFinanceiro.API.Controllers
