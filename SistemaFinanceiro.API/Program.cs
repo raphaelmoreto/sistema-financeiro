@@ -1,11 +1,4 @@
-using SistemaFinanceiro.Application.Interfaces;
-using SistemaFinanceiro.Application.Services;
-using SistemaFinanceiro.Domain.Entities;
-using SistemaFinanceiro.Domain.Interfaces;
-using SistemaFinanceiro.Infrastructure.Connection;
-using SistemaFinanceiro.Infrastructure.Interfaces;
-using SistemaFinanceiro.Infrastructure.Repositories;
-using System.Buffers.Text;
+using SistemaFinanceiro.IoC;
 
 namespace SistemaFinanceiro.API
 {
@@ -22,24 +15,8 @@ namespace SistemaFinanceiro.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            //INVERSÃO DE DEPENDÊNCIA
-            //AQUI, SEMPRE QUE UMA CLASSE DEPENDER O 'IDatabaseConnection' PASSO O 'DatabaseConnectionSqlServer'
-            builder.Services.AddScoped<IDatabaseConnection, DatabaseConnectionSqlServer>();
-
-            //AQUI, SEMPRE QUE UMA CLASSE DEPENDER O 'IDatabaseConnection' PASSO O 'DatabaseConnectionMySql'
-            //builder.Services.AddScoped<IDatabaseConnection, DatabaseConnectionMySql>();
-
-            //CONTROLLER
-            builder.Services.AddScoped<ICategoriaServices, CategoriaService>();
-            builder.Services.AddScoped<ITransacaoServices, TransacaoService>();
-
-            //SERVICES
-            builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-            builder.Services.AddScoped<ITransacaoRepository, TransacaoRepository>();
-
-            //REPOSITORIES
-            builder.Services.AddScoped<IBaseRepository<Categoria>, BaseRepository<Categoria>>();
-            builder.Services.AddScoped<IBaseRepository<Transacao>, BaseRepository<Transacao>>();
+            //CLASSE ABSTRATA ONDE FICARÁ TODAS AS INJEÇÕES DE DEPENDÊNCIAS
+            DependecyInjection.AddInfrastructure(builder.Services);
 
             var app = builder.Build();
 

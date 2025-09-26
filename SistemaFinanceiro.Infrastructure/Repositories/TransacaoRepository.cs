@@ -23,7 +23,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("           t.data_transacao");
             sb.AppendLine("FROM Transacao t");
             sb.AppendLine("JOIN Categoria c ON t.fk_categoria = c.id");
-            sb.AppendLine("JOIN NaturezaTransacao n ON t.fk_natureza = n.id");
+            sb.AppendLine("JOIN Natureza n ON t.fk_natureza = n.id");
 
             return await connection.QueryAsync<TransacaoOutputDto>(sb.ToString());
         }
