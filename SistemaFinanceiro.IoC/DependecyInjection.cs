@@ -12,7 +12,7 @@ namespace SistemaFinanceiro.IoC
 {
     public static class DependecyInjection
     {
-        //"this IServiceCollection servcies" TORNA O MÉTODO "AddInfrastructure" UMA EXTENSÃO DO "builder.Services" na program.cs
+        //O "this" NO PARÂMETRO DO MÉTODO (this IServiceCollection services) SIGNIFICA QUE O MÉTODO "AddInfrastructure" É UMA EXTENSÃO PERSONALIZADA DO "builder.Services" na program.cs
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             //INVERSÃO DE DEPENDÊNCIA
