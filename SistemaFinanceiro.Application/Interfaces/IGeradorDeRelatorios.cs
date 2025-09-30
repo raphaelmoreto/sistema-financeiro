@@ -1,5 +1,5 @@
 ﻿
-namespace SistemaFinanceiro.Domain.Interfaces
+namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface IGeradorDeRelatorios
     {

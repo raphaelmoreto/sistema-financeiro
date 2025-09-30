@@ -1,8 +1,6 @@
-﻿
-using System.Runtime.Intrinsics.X86;
-using System.Text;
+﻿using System.Text;
 
-namespace SistemaFinanceiro.Domain.Entities
+namespace SistemaFinanceiro.Application.Entities
 {
     public class GeradorDeRelatorioTxt : BaseGeradorDeRelatorios
     {

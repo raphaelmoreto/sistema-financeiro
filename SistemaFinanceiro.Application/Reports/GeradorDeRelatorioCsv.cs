@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaFinanceiro.Domain.Entities
+namespace SistemaFinanceiro.Application.Entities
 {
     internal class GeradorDeRelatorioCsv
     {

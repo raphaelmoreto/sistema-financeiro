@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Application.Services;
 using SistemaFinanceiro.Domain.Entities;

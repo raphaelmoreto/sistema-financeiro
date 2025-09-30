@@ -1,6 +1,6 @@
-﻿using SistemaFinanceiro.Domain.Interfaces;
+﻿using SistemaFinanceiro.Application.Interfaces;
 
-namespace SistemaFinanceiro.Domain.Entities
+namespace SistemaFinanceiro.Application.Entities
 {
     public abstract class BaseGeradorDeRelatorios : IGeradorDeRelatorios
     {
