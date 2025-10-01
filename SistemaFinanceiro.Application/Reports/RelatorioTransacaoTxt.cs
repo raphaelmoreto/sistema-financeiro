@@ -2,16 +2,16 @@
 
 namespace SistemaFinanceiro.Application.Reports
 {
-    public class RelatorioTxt : BaseRelatorios
+    public class RelatorioTransacaoTxt : BaseRelatorios
     {
-        public RelatorioTxt(List<string> data) : base(data) { }
+        public RelatorioTransacaoTxt(List<string> dados) : base(dados) { }
 
-        protected override byte[] FormatarDadosEmBytes()
+        protected override byte[] FormatadarDadosEmBytes()
         {
             //"string.Join(...) É UM MÉTODO ESTÁTICO DA CLASSE STRING QUE CONCATENA OS ELEMENTOS DE UMA COLEÇÃO (COMO UM ARRAY OU LISTA) NUMA ÚNICA STRING"
-            
+
             //"Environment.NewLine" É UM SEPARADOR QUE GARANTE QUE A QUEBRA DE LINHA SEJA A APROPRIADA PARA O SISTEMA OPERATIVO ONDE O CÓDIGO ESTÁ A SER EXECUTADO. POR EXEMPLO, NO WINDOWS É "\r\n", ENQUANTO EM OUTROS SISTEMAS É '\n' ou '\r'
-            var content = string.Join(Environment.NewLine, Data);
+            var content = string.Join(Environment.NewLine, Dados);
 
             //"Encoding.UTF8" INDICA QUE VOCÊ QUER TRABALHAR COM A CODIFICAÇÃO UTF-8, QUE É UMA FORMA DE TRANSFORMAR CARACTERES EM BYTES
 

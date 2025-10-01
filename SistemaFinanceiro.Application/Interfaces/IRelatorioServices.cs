@@ -1,7 +1,7 @@
 ﻿
 namespace SistemaFinanceiro.Application.Interfaces
 {
-    public interface IGerarRelatorio
+    public interface IRelatorioServices
     {
         Task<byte[]> GerarRelatorio(string extensao);
     }

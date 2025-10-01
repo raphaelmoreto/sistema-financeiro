@@ -3,11 +3,11 @@ using SistemaFinanceiro.Application.Reports;
 
 namespace SistemaFinanceiro.Application.Services
 {
-    public class GerarRelatorioTransacao : IGerarRelatorio
+    public class RelatorioTransacaoService : IRelatorioServices
     {
         private readonly ITransacaoServices transacaoServices;
 
-        public GerarRelatorioTransacao(ITransacaoServices transacaoServices)
+        public RelatorioTransacaoService(ITransacaoServices transacaoServices)
         {
             this.transacaoServices = transacaoServices;
         }
@@ -18,11 +18,11 @@ namespace SistemaFinanceiro.Application.Services
                 throw new ArgumentNullException("EXTENSÃO NÃO DECLARADA");
 
             var transacoes = await transacaoServices.BuscarTransacoes();
-            var data = transacoes.Select(t => t.ToString()).ToList();
+            var dados = transacoes.Select(t => t.ToString()).ToList();
 
-            var bytes = extensao.ToLower() switch
+            byte[] bytes = extensao.ToLower() switch
             {
-                ".txt" => new RelatorioTxt(data).GerarBytes(),
+                ".txt" => new RelatorioTransacaoTxt(dados).GerarBytes(),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA")
             };
 

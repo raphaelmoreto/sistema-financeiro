@@ -9,15 +9,15 @@ namespace SistemaFinanceiro.API.Controllers
     [ApiController]
     public class RelatorioTransacaoController : ControllerBase
     {
-        private readonly IGerarRelatorio gerarRelatorio;
+        private readonly IRelatorioServices relatorioServices;
 
-        public RelatorioTransacaoController(IGerarRelatorio gerarRelatorio)
+        public RelatorioTransacaoController(IRelatorioServices relatorioServices)
         {
-            this.gerarRelatorio = gerarRelatorio;
+            this.relatorioServices = relatorioServices;
         }
 
         [HttpPost("download")]
-        public async Task<IActionResult> DownloadRelatorio([FromBody] string extensao)
+        public async Task<IActionResult> DownloadRelatorioTransacao([FromBody] string extensao)
         {
             //"File(...)" É UM "helper" DO ASP.NET Core MVC Controller. ELE SERVE PARA RETORNAR UM ARQUIVO COMO RESPOSTA HTTP PARA O CLIENTE (NAVEGADOR, POSTMAN, ETC.)
 
@@ -26,8 +26,8 @@ namespace SistemaFinanceiro.API.Controllers
             //"application/octet-stream" É UM "MIME type" QUE SIGNIFICA "FLUXO BINÁRIO GENÉRICO". É USADO QUANDO O TIPO DO ARQUIVO NÃO É ESPECÍFICO (COMO PDF, XLSX, ETC.). ISSO FAZ O NAVEGADOR BAIXAR O ARQUIVO EM VEZ DE TENTAR ABRIR DIRETAMENTE
             try
             {
-                var result = await gerarRelatorio.GerarRelatorio(extensao);
-                return File(result, MimeTypeHelper.GetMimeType(extensao), $"relatorio-de-transacao{extensao}");
+                var result = await relatorioServices.GerarRelatorio(extensao);
+                return File(result, MimeTypeHelper.GetMimeType(extensao), $"relatorio-de-transacaoes{extensao}");
                 //"return File(bytes, "application/pdf", "relatorio.pdf")" ASSIM O NAVEGADOR JÁ RECONHECE QUE É PDF E O ABRE DIRETAMENTE
             }
             catch (Exception ex)

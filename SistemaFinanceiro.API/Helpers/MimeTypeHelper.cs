@@ -15,6 +15,7 @@
             {
                 return mimeType;
             }
+
             return "application/octet-stream";
         }
     }
