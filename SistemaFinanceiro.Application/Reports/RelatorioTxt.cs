@@ -1,10 +1,10 @@
 ﻿using System.Text;
 
-namespace SistemaFinanceiro.Application.Entities
+namespace SistemaFinanceiro.Application.Reports
 {
-    public class GeradorDeRelatorioTxt : BaseGeradorDeRelatorios
+    public class RelatorioTxt : BaseRelatorios
     {
-        public GeradorDeRelatorioTxt(List<string> data) : base(data) { }
+        public RelatorioTxt(List<string> data) : base(data) { }
 
         protected override byte[] FormatarDadosEmBytes()
         {

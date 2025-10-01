@@ -1,12 +1,12 @@
 ﻿using SistemaFinanceiro.Application.Interfaces;
 
-namespace SistemaFinanceiro.Application.Entities
+namespace SistemaFinanceiro.Application.Reports
 {
-    public abstract class BaseGeradorDeRelatorios : IGeradorDeRelatorios
+    public abstract class BaseRelatorios : IGerarBytes
     {
         protected List<string> Data { get; }
 
-        protected BaseGeradorDeRelatorios(List<string> data)
+        protected BaseRelatorios(List<string> data)
         {
             //O "nameof()" O NOME DE UMA VARIÁVEL, TIPO OU MEMBRO COMO UMA STRING DE TEXTO EM TEMPO DE COMPILAÇÃO
             Data = data ?? throw new ArgumentNullException(nameof(data));
@@ -14,7 +14,7 @@ namespace SistemaFinanceiro.Application.Entities
 
         protected abstract byte[] FormatarDadosEmBytes();
 
-        public byte[] GerarBytesDeRelatorio()
+        public byte[] GerarBytes()
         {
             if (Data == null || Data.Count == 0)
             {
