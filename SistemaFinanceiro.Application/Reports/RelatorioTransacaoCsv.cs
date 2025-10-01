@@ -1,4 +1,5 @@
-﻿
+﻿using System.Text;
+
 namespace SistemaFinanceiro.Application.Reports
 {
     public class RelatorioTransacaoCsv : BaseRelatorios
@@ -7,7 +8,8 @@ namespace SistemaFinanceiro.Application.Reports
 
         protected override byte[] FormatadarDadosEmBytes()
         {
-            throw new NotImplementedException();
+            var content = string.Join(Environment.NewLine, Dados);
+            return Encoding.UTF8.GetBytes(content);
         }
     }
 }

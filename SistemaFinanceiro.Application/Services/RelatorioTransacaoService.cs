@@ -31,6 +31,7 @@ namespace SistemaFinanceiro.Application.Services
             byte[] bytes = extensao.ToLower() switch
             {
                 ".txt" => new RelatorioTransacaoTxt(dados).GerarBytes(),
+                ".csv" => new RelatorioTransacaoCsv(dados).GerarBytes(),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA")
             };
 
