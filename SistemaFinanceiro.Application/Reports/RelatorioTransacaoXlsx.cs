@@ -1,10 +1,10 @@
-﻿using System.Text;
+﻿using SistemaFinanceiro.Domain.Dtos;
 
 namespace SistemaFinanceiro.Application.Reports
 {
-    public class RelatorioTransacaoXlsx : BaseRelatorios
+    public class RelatorioTransacaoXlsx : BaseRelatorios<TransacaoOutputDto>
     {
-        public RelatorioTransacaoXlsx(List<string> dados) : base(dados) { } 
+        public RelatorioTransacaoXlsx(List<TransacaoOutputDto> dados) : base(dados) { } 
 
         protected override byte[] FormatadarDadosEmBytes()
         {

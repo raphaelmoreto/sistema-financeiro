@@ -1,6 +1,5 @@
 ﻿using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Application.Reports;
-using System.Globalization;
 
 namespace SistemaFinanceiro.Application.Services
 {
@@ -18,20 +17,13 @@ namespace SistemaFinanceiro.Application.Services
             if (string.IsNullOrWhiteSpace(extensao))
                 throw new ArgumentNullException("EXTENSÃO NÃO DECLARADA");
 
-            var transacoes = await transacaoServices.BuscarTransacoes();
-
-            var dados = transacoes.Select(
-                t => $"{t.Descricao}; " +
-                       $"{t.Categoria}; " +
-                       $"{t.Natureza}; " +
-                       $"{t.Valor.ToString("F2", CultureInfo.InvariantCulture)}; " +
-                       $"{t.Data_Transacao.ToString("dd/MM/yyyy")}"
-            ).ToList();
+            //O "ToList()" PRESERVA O TIPO QUE JÁ EXISTE DENTRO DO "IEnumerable<T>". NO CASO ATUAL, PRESERVA UM "IEnumerable<TransacaoOutputDto>"
+            var transacoes = (await transacaoServices.BuscarTransacoes()).ToList();
 
             byte[] bytes = extensao.ToLower() switch
             {
-                ".txt" => new RelatorioTransacaoTxt(dados).GerarBytes(),
-                ".csv" => new RelatorioTransacaoCsv(dados).GerarBytes(),
+                ".txt" => new RelatorioTransacaoTxt(transacoes).GerarBytes(),
+                ".csv" => new RelatorioTransacaoCsv(transacoes).GerarBytes(),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA")
             };
 

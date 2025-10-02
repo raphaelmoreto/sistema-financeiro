@@ -1,17 +1,27 @@
-﻿using System.Text;
+﻿using SistemaFinanceiro.Domain.Dtos;
+using System.Globalization;
+using System.Text;
 
 namespace SistemaFinanceiro.Application.Reports
 {
-    public class RelatorioTransacaoTxt : BaseRelatorios
+    public class RelatorioTransacaoTxt : BaseRelatorios<TransacaoOutputDto>
     {
-        public RelatorioTransacaoTxt(List<string> dados) : base(dados) { }
+        public RelatorioTransacaoTxt(List<TransacaoOutputDto> dados) : base(dados) { }
 
         protected override byte[] FormatadarDadosEmBytes()
         {
+            var dados = Dados.Select(
+                t => $"{t.Descricao}; " +
+                       $"{t.Categoria}; " +
+                       $"{t.Natureza}; " +
+                       $"{t.Valor.ToString("F2", CultureInfo.InvariantCulture)}; " +
+                       $"{t.Data_Transacao:dd/MM/yyyy}"
+            );
+
             //"string.Join(...) É UM MÉTODO ESTÁTICO DA CLASSE STRING QUE CONCATENA OS ELEMENTOS DE UMA COLEÇÃO (COMO UM ARRAY OU LISTA) NUMA ÚNICA STRING"
 
             //"Environment.NewLine" É UM SEPARADOR QUE GARANTE QUE A QUEBRA DE LINHA SEJA A APROPRIADA PARA O SISTEMA OPERATIVO ONDE O CÓDIGO ESTÁ A SER EXECUTADO. POR EXEMPLO, NO WINDOWS É "\r\n", ENQUANTO EM OUTROS SISTEMAS É '\n' ou '\r'
-            var content = string.Join(Environment.NewLine, Dados);
+            var content = string.Join(Environment.NewLine, dados);
 
             //"Encoding.UTF8" INDICA QUE VOCÊ QUER TRABALHAR COM A CODIFICAÇÃO UTF-8, QUE É UMA FORMA DE TRANSFORMAR CARACTERES EM BYTES
 

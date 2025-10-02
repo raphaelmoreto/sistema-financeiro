@@ -2,11 +2,11 @@
 
 namespace SistemaFinanceiro.Application.Reports
 {
-    public abstract class BaseRelatorios : IGerarBytes
+    public abstract class BaseRelatorios<T> : IGerarBytes
     {
-        protected List<string> Dados {  get; }
+        protected List<T> Dados {  get; }
 
-        protected BaseRelatorios(List<string> dados)
+        protected BaseRelatorios(List<T> dados)
         {
             //O "nameof()" SERVE PARA OBETER O NOME DE UMA VARIÁVEL, TIPO OU MEMBRO COMO UMA STRING DE TEXTO EM TEMPO DE COMPILAÇÃO
             Dados = dados ?? throw new ArgumentNullException(nameof(dados));
