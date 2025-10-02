@@ -1,3 +1,4 @@
+using OfficeOpenXml;
 using SistemaFinanceiro.IoC;
 
 namespace SistemaFinanceiro.API
@@ -17,6 +18,8 @@ namespace SistemaFinanceiro.API
 
             //CLASSE ABSTRATA ONDE FICARÁ TODAS AS INJEÇÕES DE DEPENDÊNCIAS
             DependecyInjection.AddInfrastructure(builder.Services);
+
+            ExcelPackage.License.SetNonCommercialPersonal("BlaBlaBla");
 
             var app = builder.Build();
 

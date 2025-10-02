@@ -24,6 +24,7 @@ namespace SistemaFinanceiro.Application.Services
             {
                 ".txt" => new RelatorioTransacaoTxt(transacoes).GerarBytes(),
                 ".csv" => new RelatorioTransacaoCsv(transacoes).GerarBytes(),
+                ".xlsx" => new RelatorioTransacaoXlsx(transacoes).GerarBytes(),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA")
             };
 
