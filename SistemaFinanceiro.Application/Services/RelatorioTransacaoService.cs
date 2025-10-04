@@ -1,15 +1,18 @@
 ﻿using SistemaFinanceiro.Application.Interfaces;
-using SistemaFinanceiro.Application.Reports;
+using SistemaFinanceiro.Domain.Dtos;
 
 namespace SistemaFinanceiro.Application.Services
 {
     public class RelatorioTransacaoService : IRelatorioServices
     {
         private readonly ITransacaoServices transacaoServices;
+        private readonly IFabricaRelatorio<TransacaoOutputDto> fabricaRelatorio;
 
-        public RelatorioTransacaoService(ITransacaoServices transacaoServices)
+        public RelatorioTransacaoService(ITransacaoServices transacaoServices,
+                                                    IFabricaRelatorio<TransacaoOutputDto> fabricaRelatorio)
         {
             this.transacaoServices = transacaoServices;
+            this.fabricaRelatorio = fabricaRelatorio;
         }
 
         public async Task<byte[]> GerarRelatorio(string extensao)
@@ -20,15 +23,9 @@ namespace SistemaFinanceiro.Application.Services
             //O "ToList()" PRESERVA O TIPO QUE JÁ EXISTE DENTRO DO "IEnumerable<T>". NO CASO ATUAL, PRESERVA UM "IEnumerable<TransacaoOutputDto>"
             var transacoes = (await transacaoServices.BuscarTransacoes()).ToList();
 
-            byte[] bytes = extensao.ToLower() switch
-            {
-                ".txt" => new RelatorioTransacaoTxt(transacoes).GerarBytes(),
-                ".csv" => new RelatorioTransacaoCsv(transacoes).GerarBytes(),
-                ".xlsx" => new RelatorioTransacaoXlsx(transacoes).GerarBytes(),
-                _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA")
-            };
+            var relatorio = fabricaRelatorio.CriarBytes(extensao, transacoes);
 
-            return bytes;
+            return relatorio.CriarBytes();
         }
     }
 }

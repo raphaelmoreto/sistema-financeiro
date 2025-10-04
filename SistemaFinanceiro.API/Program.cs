@@ -19,7 +19,7 @@ namespace SistemaFinanceiro.API
             //CLASSE ABSTRATA ONDE FICARÁ TODAS AS INJEÇÕES DE DEPENDÊNCIAS
             DependecyInjection.AddInfrastructure(builder.Services);
 
-            ExcelPackage.License.SetNonCommercialPersonal("BlaBlaBla");
+            ExcelPackage.License.SetNonCommercialPersonal("BlaBlaBla"); //BIBLIOTECA PARA TRABALHAR COM ARQUIVOS EXCEL EM .NET PARA FINS NÃO COMERCIAL
 
             var app = builder.Build();
 

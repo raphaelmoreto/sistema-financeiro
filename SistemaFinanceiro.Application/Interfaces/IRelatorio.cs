@@ -1,8 +1,8 @@
 ﻿
 namespace SistemaFinanceiro.Application.Interfaces
 {
-    public interface IGerarBytes
+    public interface IRelatorio
     {
-        byte[] GerarBytes();
+        byte[] CriarBytes();
     }
 }

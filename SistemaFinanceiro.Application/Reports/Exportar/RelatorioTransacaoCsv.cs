@@ -1,10 +1,11 @@
-﻿using SistemaFinanceiro.Domain.Dtos;
+﻿using SistemaFinanceiro.Application.Interfaces;
+using SistemaFinanceiro.Domain.Dtos;
 using System.Globalization;
 using System.Text;
 
-namespace SistemaFinanceiro.Application.Reports
+namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public class RelatorioTransacaoCsv : BaseRelatorios<TransacaoOutputDto>
+    public class RelatorioTransacaoCsv : BaseExportarRelatorios<TransacaoOutputDto>, IRelatorio
     {
         public RelatorioTransacaoCsv(List<TransacaoOutputDto> dados) : base(dados) { } 
 

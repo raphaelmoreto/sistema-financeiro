@@ -1,20 +1,21 @@
-﻿using SistemaFinanceiro.Domain.Dtos;
+﻿using SistemaFinanceiro.Application.Interfaces;
+using SistemaFinanceiro.Domain.Dtos;
 using System.Globalization;
 using System.Text;
 
-namespace SistemaFinanceiro.Application.Reports
+namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public class RelatorioTransacaoTxt : BaseRelatorios<TransacaoOutputDto>
+    public class RelatorioTransacaoTxt : BaseExportarRelatorios<TransacaoOutputDto>, IRelatorio
     {
         public RelatorioTransacaoTxt(List<TransacaoOutputDto> dados) : base(dados) { }
 
         protected override byte[] FormatadarDadosEmBytes()
         {
             var dados = Dados.Select(
-                t => $"{t.Descricao}; " +
-                       $"{t.Categoria}; " +
-                       $"{t.Natureza}; " +
-                       $"{t.Valor.ToString("F2", CultureInfo.InvariantCulture)}; " +
+                t => $"{t.Descricao}" + "\t" +
+                       $"{t.Categoria}" + "\t" +
+                       $"{t.Natureza}" + "\t" +
+                       $"{t.Valor.ToString("F2", CultureInfo.InvariantCulture)}" + "\t" +
                        $"{t.Data_Transacao:dd/MM/yyyy}"
             );
 

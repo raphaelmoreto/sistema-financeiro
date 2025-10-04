@@ -1,12 +1,11 @@
-﻿using SistemaFinanceiro.Application.Interfaces;
-
-namespace SistemaFinanceiro.Application.Reports
+﻿
+namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public abstract class BaseRelatorios<T> : IGerarBytes
+    public abstract class BaseExportarRelatorios<T>
     {
         protected List<T> Dados {  get; }
 
-        protected BaseRelatorios(List<T> dados)
+        protected BaseExportarRelatorios(List<T> dados)
         {
             //O "nameof()" SERVE PARA OBETER O NOME DE UMA VARIÁVEL, TIPO OU MEMBRO COMO UMA STRING DE TEXTO EM TEMPO DE COMPILAÇÃO
             Dados = dados ?? throw new ArgumentNullException(nameof(dados));
@@ -14,7 +13,7 @@ namespace SistemaFinanceiro.Application.Reports
 
         protected abstract byte[] FormatadarDadosEmBytes();
 
-        public byte[] GerarBytes()
+        public byte[] CriarBytes()
         {
             if (Dados == null || Dados.Count == 0)
             {

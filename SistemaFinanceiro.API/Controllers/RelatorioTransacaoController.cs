@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SistemaFinanceiro.API.Helpers;
 using SistemaFinanceiro.Application.Interfaces;
 
@@ -35,5 +34,20 @@ namespace SistemaFinanceiro.API.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
+        //[HttpPost("upload")]
+        //public async Task<IActionResult> UploadArquivoTransacao(IFormFile arquivo)
+        //{
+        //    using var memoryStream = new MemoryStream();
+        //    await arquivo.CopyToAsync(memoryStream);
+        //    try
+        //    {
+        //        var result = 
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
     }
 }

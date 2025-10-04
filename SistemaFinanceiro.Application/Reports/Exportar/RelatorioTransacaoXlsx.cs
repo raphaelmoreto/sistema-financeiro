@@ -1,10 +1,10 @@
 ﻿using OfficeOpenXml;
+using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Domain.Dtos;
-using System.Globalization;
 
-namespace SistemaFinanceiro.Application.Reports
+namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public class RelatorioTransacaoXlsx : BaseRelatorios<TransacaoOutputDto>
+    public class RelatorioTransacaoXlsx : BaseExportarRelatorios<TransacaoOutputDto>, IRelatorio
     {
         public RelatorioTransacaoXlsx(List<TransacaoOutputDto> dados) : base(dados) { }
 
@@ -22,11 +22,11 @@ namespace SistemaFinanceiro.Application.Reports
             for (int i = 0; i < Dados.Count; i++)
             {
                 var t = Dados[i];
-                planilha.Cells[(i + 2), 1].Value = t.Descricao;
-                planilha.Cells[(i + 2), 2].Value = t.Categoria;
-                planilha.Cells[(i + 2), 3].Value = t.Natureza;
-                planilha.Cells[(i + 2), 4].Value = t.Valor;
-                planilha.Cells[(i + 2), 5].Value = t.Data_Transacao.ToString("dd/MM/yyyy");
+                planilha.Cells[i + 2, 1].Value = t.Descricao;
+                planilha.Cells[i + 2, 2].Value = t.Categoria;
+                planilha.Cells[i + 2, 3].Value = t.Natureza;
+                planilha.Cells[i + 2, 4].Value = t.Valor;
+                planilha.Cells[i + 2, 5].Value = t.Data_Transacao.ToString("dd/MM/yyyy");
             }
             return package.GetAsByteArray(); //TRANSFORMA PLANILHAS EXCEL EM BYTES
         }
