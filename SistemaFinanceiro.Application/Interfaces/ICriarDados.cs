@@ -1,8 +1,8 @@
 ﻿
 namespace SistemaFinanceiro.Application.Interfaces
 {
-    public interface IRelatorio
+    public interface ICriarDados<T>
     {
-        byte[] CriarBytes();
+        List<T> CriarDados();
     }
 }

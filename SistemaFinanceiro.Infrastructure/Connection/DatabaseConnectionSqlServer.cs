@@ -14,7 +14,7 @@ namespace SistemaFinanceiro.Infrastructure.Connection
         public DatabaseConnectionSqlServer(IConfiguration configuration)
         {
             this.configuration = configuration;
-            connectionString = this.configuration.GetConnectionString("SqlServerConnectionHouse")!;
+            connectionString = this.configuration.GetConnectionString("SqlServerConnectionJob")!;
         }
 
         public IDbConnection GetConnection()

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public class RelatorioTransacaoCsv : BaseExportarRelatorios<TransacaoOutputDto>, IRelatorio
+    public class RelatorioTransacaoCsv : BaseExportarRelatorios<TransacaoOutputDto>, ICriarBytes
     {
         public RelatorioTransacaoCsv(List<TransacaoOutputDto> dados) : base(dados) { } 
 

@@ -4,7 +4,7 @@ using SistemaFinanceiro.Domain.Dtos;
 
 namespace SistemaFinanceiro.Application.Reports.Exportar
 {
-    public class RelatorioTransacaoXlsx : BaseExportarRelatorios<TransacaoOutputDto>, IRelatorio
+    public class RelatorioTransacaoXlsx : BaseExportarRelatorios<TransacaoOutputDto>, ICriarBytes
     {
         public RelatorioTransacaoXlsx(List<TransacaoOutputDto> dados) : base(dados) { }
 

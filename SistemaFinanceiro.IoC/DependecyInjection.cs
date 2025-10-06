@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SistemaFinanceiro.Application.Factory;
 using SistemaFinanceiro.Application.Interfaces;
-using SistemaFinanceiro.Application.Reports;
 using SistemaFinanceiro.Application.Services;
 using SistemaFinanceiro.Domain.Dtos;
 using SistemaFinanceiro.Domain.Entities;
@@ -31,7 +31,8 @@ namespace SistemaFinanceiro.IoC
             //SERVICES
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ITransacaoRepository, TransacaoRepository>();
-            services.AddScoped<IFabricaRelatorio<TransacaoOutputDto>, FabricaDeRelatorios>();
+            services.AddScoped<IGeradorRelatorio<TransacaoOutputDto>, FabricaDeRelatoriosTransacoes>();
+            services.AddScoped<ILerArquivo<TransacaoInputPorArquivoDto>, FabricaDeRelatoriosTransacoes>();
 
             //REPOSITORIES
             services.AddScoped<IBaseRepository<Categoria>, BaseRepository<Categoria>>();
