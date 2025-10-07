@@ -45,13 +45,13 @@ namespace SistemaFinanceiro.Domain.Entities
             Fk_Categoria = fkCategoria;
         }
 
-        //public void AtualizarData(DateTime dataTransacao)
-        //{
-        //    if (DataTransacao == dataTransacao)
-        //        return;
+        public void AtribuirData(DateTime dataTransacao)
+        {
+            if (Data_Transacao == dataTransacao)
+                return;
 
-        //    DataTransacao = dataTransacao;
-        //}
+            Data_Transacao = dataTransacao;
+        }
 
         public void AtribuirDescricao(string descricao)
         {

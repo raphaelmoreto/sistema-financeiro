@@ -10,10 +10,15 @@ namespace SistemaFinanceiro.Application.Reports.Importar
 
         protected override List<TransacaoInputPorArquivoDto> ConverterBytesEmDados()
         {
-            List<TransacaoInputPorArquivoDto> transacoes = [];
+            List<TransacaoInputPorArquivoDto> lstTransacoes = [];
 
             var dados = Encoding.UTF8.GetString(Dados);
-            var context = dados.Split(Environment.NewLine);
+            var transacoes = dados.Split(Environment.NewLine);
+
+            for (int i = 0; i < Dados.Length; i++)
+            {
+                var transacao = transacoes[i].Split('\t');
+            }
 
             throw new NotImplementedException();
         }
