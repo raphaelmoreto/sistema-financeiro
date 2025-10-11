@@ -32,7 +32,7 @@ namespace SistemaFinanceiro.IoC
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ITransacaoRepository, TransacaoRepository>();
             services.AddScoped<IGeradorRelatorio<TransacaoOutputDto>, FabricaDeRelatoriosTransacoes>();
-            services.AddScoped<ILerArquivo<TransacaoInputPorArquivoDto>, FabricaDeRelatoriosTransacoes>();
+            services.AddScoped<ILerArquivo<Transacao>, FabricaDeRelatoriosTransacoes>();
 
             //REPOSITORIES
             services.AddScoped<IBaseRepository<Categoria>, BaseRepository<Categoria>>();

@@ -1,19 +1,21 @@
 ﻿using SistemaFinanceiro.Application.Interfaces;
 using SistemaFinanceiro.Domain.Dtos;
+using SistemaFinanceiro.Domain.Entities;
+using SistemaFinanceiro.Domain.Interfaces;
 
 namespace SistemaFinanceiro.Application.Services
 {
     public class RelatorioTransacaoService : IRelatorioServices
     {
-        private readonly ITransacaoServices transacaoServices;
+        private readonly ITransacaoRepository transacaoRepository;
         private readonly IGeradorRelatorio<TransacaoOutputDto> geradorRelatorio;
-        private readonly ILerArquivo<TransacaoInputPorArquivoDto> lerArquivo;
+        private readonly ILerArquivo<Transacao> lerArquivo;
 
-        public RelatorioTransacaoService(ITransacaoServices transacaoServices,
+        public RelatorioTransacaoService(ITransacaoRepository transacaoRepository,
                                                         IGeradorRelatorio<TransacaoOutputDto> geradorRelatorio,
-                                                        ILerArquivo<TransacaoInputPorArquivoDto> lerArquivo)
+                                                        ILerArquivo<Transacao> lerArquivo)
         {
-            this.transacaoServices = transacaoServices;
+            this.transacaoRepository = transacaoRepository;
             this.geradorRelatorio = geradorRelatorio;
             this.lerArquivo = lerArquivo;
         }
@@ -24,7 +26,7 @@ namespace SistemaFinanceiro.Application.Services
                 throw new ArgumentNullException("EXTENSÃO NÃO DECLARADA");
 
             //O "ToList()" PRESERVA O TIPO QUE JÁ EXISTE DENTRO DO "IEnumerable<T>". NO CASO ATUAL, PRESERVA UM "IEnumerable<TransacaoOutputDto>"
-            var transacoes = (await transacaoServices.BuscarTransacoes()).ToList();
+            var transacoes = (await transacaoRepository.ListTransacoes()).ToList();
 
             var relatorio = geradorRelatorio.CriarBytes(extensao, transacoes);
 
@@ -38,7 +40,11 @@ namespace SistemaFinanceiro.Application.Services
 
             var relatorio = lerArquivo.ExecutarLeitura(extensao, dados);
 
-            var transacoes = relatorio.CriarDados();
+            var transacoes = await relatorio.CriarDados();
+            foreach (var transacao in transacoes)
+            {
+                await transacaoRepository.Insert(transacao);
+            }
 
             throw new NotImplementedException();
         }

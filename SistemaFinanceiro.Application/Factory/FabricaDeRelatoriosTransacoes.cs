@@ -2,11 +2,19 @@
 using SistemaFinanceiro.Application.Reports.Exportar;
 using SistemaFinanceiro.Application.Reports.Importar;
 using SistemaFinanceiro.Domain.Dtos;
+using SistemaFinanceiro.Domain.Entities;
+using SistemaFinanceiro.Domain.Interfaces;
 
 namespace SistemaFinanceiro.Application.Factory
 {
-    public class FabricaDeRelatoriosTransacoes : IGeradorRelatorio<TransacaoOutputDto>, ILerArquivo<TransacaoInputPorArquivoDto>
+    public class FabricaDeRelatoriosTransacoes : IGeradorRelatorio<TransacaoOutputDto>, ILerArquivo<Transacao>
     {
+        private readonly ICategoriaRepository categoriaRepository;
+
+        public FabricaDeRelatoriosTransacoes(ICategoriaRepository categoriaRepository)
+        {
+            this.categoriaRepository = categoriaRepository;
+        }
         //A INTERFACE "IRelatorio CriarBytes(string extensao, List<T> dados)" QUE ESTÁ NO CAMINHO "SistemaFinanceiro.Application.Interfaces" NÃO SE COMPROMETE COM A CLASSE CONCRETA (RelatorioTransacaoTxt, RelatorioTransacaoCsv etc.). ELE SÓ PROMETE QUE VAI ENTREGAR UM OBJETO QUE SABE GERAR BYTES, OU SEJA, QUE IMPLEMENTA A INTERFACE "IRelatorio"
 
         //EMBORA O RETORNO SEJA DECLARADO COMO "IRelatorio", QUEM VOLTA DE FATO É UMA INSTÂNCIA CONCRETA (RelatorioTransacaoTxt, RelatorioTransacaoCsv, ...)
@@ -22,11 +30,12 @@ namespace SistemaFinanceiro.Application.Factory
             };
         }
 
-        public ICriarDados<TransacaoInputPorArquivoDto> ExecutarLeitura(string extensao, byte[] dados)
+        public ICriarDados<Transacao> ExecutarLeitura(string extensao, byte[] dados)
         {
             return extensao switch
             {
-                ".txt" => new ArquivoTransacaoTxt(dados),
+                ".csv" => new ArquivoTransacaoCsv(categoriaRepository, dados),
+                ".txt" => new ArquivoTransacaoTxt(categoriaRepository, dados),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA!")
             };
         }

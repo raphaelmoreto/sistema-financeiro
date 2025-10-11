@@ -31,6 +31,15 @@ namespace SistemaFinanceiro.Domain.Entities
             Data_Transacao = DateTime.Now;
         }
 
+        public Transacao(string descricao, int fkCategoria, decimal valor, DateTime dataTransacao)
+        {
+            AtribuirDescricao(descricao);
+            AtribuirCategoria(fkCategoria);
+            AtribuirValor(valor);
+            AtribuirNatureza();
+            AtribuirData(dataTransacao);
+        }
+
         public void AtribuirCategoria(int fkCategoria)
         {
             if (fkCategoria <= 0)

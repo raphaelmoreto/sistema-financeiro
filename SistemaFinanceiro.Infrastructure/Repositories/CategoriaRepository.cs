@@ -42,5 +42,15 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
 
             return await connection.QueryFirstOrDefaultAsync<CategoriaOutputDto>(sb.ToString(), new { Id = id });
         }
+
+        public async Task<int> SearchCategoriaByName(string categoria)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("SELECT id");
+            sb.AppendLine("FROM Categoria");
+            sb.AppendLine("WHERE nome = @Categoria");
+
+            return await connection.ExecuteScalarAsync<int>(sb.ToString(), new { Categoria = categoria });
+        }
     }
 }

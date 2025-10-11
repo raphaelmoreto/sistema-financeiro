@@ -3,6 +3,6 @@ namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface ICriarDados<T>
     {
-        List<T> CriarDados();
+        Task<List<T>> CriarDados();
     }
 }

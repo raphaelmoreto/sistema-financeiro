@@ -1,15 +1,16 @@
 ﻿using SistemaFinanceiro.Application.Interfaces;
-using SistemaFinanceiro.Domain.Dtos;
+using SistemaFinanceiro.Domain.Entities;
+using SistemaFinanceiro.Domain.Interfaces;
 
 namespace SistemaFinanceiro.Application.Reports.Importar
 {
-    public class ArquivoTransacaoXlsx : BaseImportarArquivo<TransacaoInputPorArquivoDto>, ICriarDados<TransacaoInputPorArquivoDto>
+    public class ArquivoTransacaoXlsx : BaseImportarArquivo<Transacao>, ICriarDados<Transacao>
     {
-        public ArquivoTransacaoXlsx(byte[] dados) : base(dados)
+        public ArquivoTransacaoXlsx(ICategoriaRepository categoriaRepository, byte[] dados) : base(categoriaRepository, dados)
         {
         }
 
-        protected override List<TransacaoInputPorArquivoDto> ConverterBytesEmDados()
+        protected override async Task<List<Transacao>> ConverterBytesEmDados()
         {
             throw new NotImplementedException();
         }
