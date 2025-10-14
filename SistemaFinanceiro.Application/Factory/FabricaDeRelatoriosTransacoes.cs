@@ -36,6 +36,7 @@ namespace SistemaFinanceiro.Application.Factory
             {
                 ".csv" => new ArquivoTransacaoCsv(categoriaRepository, dados),
                 ".txt" => new ArquivoTransacaoTxt(categoriaRepository, dados),
+                ".xlsx" => new ArquivoTransacaoXlsx(categoriaRepository, dados),
                 _ => throw new ArgumentException("EXTENSÃO NÃO SUPORTADA!")
             };
         }

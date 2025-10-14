@@ -46,6 +46,7 @@ namespace SistemaFinanceiro.Application.Services
                 await transacaoRepository.Insert(transacao);
             }
 
+            //ToDo: FAZER VALIDAÇÕES DE CADA INSERÇÃO NO BANCO
             throw new NotImplementedException();
         }
     }
