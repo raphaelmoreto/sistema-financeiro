@@ -18,8 +18,8 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("FROM Categoria");
             sb.AppendLine("WHERE nome = @Categoria");
 
-            var result = await connection.QuerySingleAsync<int>(sb.ToString(), new { Categoria = nome });
-            return result > 0;
+            var connection = CreateConnection();
+            return await connection.QuerySingleAsync<int>(sb.ToString(), new { Categoria = nome }) > 0;
         }
 
         public async Task<IEnumerable<CategoriaOutputDto>> ListCategorias()
@@ -29,6 +29,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("           nome");
             sb.AppendLine("FROM Categoria");
 
+            var connection = CreateConnection();
             return await connection.QueryAsync<CategoriaOutputDto>(sb.ToString());
         }
 
@@ -40,6 +41,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("FROM Categoria");
             sb.AppendLine("WHERE id = @Id");
 
+            var connection = CreateConnection();
             return await connection.QueryFirstOrDefaultAsync<CategoriaOutputDto>(sb.ToString(), new { Id = id });
         }
 
@@ -50,6 +52,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("FROM Categoria");
             sb.AppendLine("WHERE nome = @Categoria");
 
+            var connection = CreateConnection();
             return await connection.ExecuteScalarAsync<int>(sb.ToString(), new { Categoria = categoria });
         }
     }

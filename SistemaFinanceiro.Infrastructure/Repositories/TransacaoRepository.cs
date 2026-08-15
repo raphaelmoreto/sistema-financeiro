@@ -25,6 +25,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("JOIN Categoria c ON t.fk_categoria = c.id");
             sb.AppendLine("JOIN Natureza n ON t.fk_natureza = n.id");
 
+            var connection = CreateConnection();
             return await connection.QueryAsync<TransacaoOutputDto>(sb.ToString());
         }
 
@@ -42,6 +43,7 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             sb.AppendLine("LEFT JOIN NaturezaTransacao n ON t.fk_natureza = n.id");
             sb.AppendLine("WHERE t.id = @Id");
 
+            var connection = CreateConnection();
             return await connection.QueryFirstOrDefaultAsync<TransacaoOutputDto>(sb.ToString(), new { Id = id });
         }
     }
