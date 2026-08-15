@@ -15,7 +15,7 @@ namespace SistemaFinanceiro.Domain.Entities
 
         public decimal Valor { get; private set; }
 
-        public DateTime Data_Transacao { get; private set; }
+        public DateTime Data_Transacao { get; private set; } = DateTime.Now;
 
         public Transacao() { }
 
@@ -28,7 +28,6 @@ namespace SistemaFinanceiro.Domain.Entities
             Validar();
 
             AtribuirNatureza();
-            Data_Transacao = DateTime.Now;
         }
 
         public Transacao(string descricao, int fkCategoria, decimal valor, DateTime dataTransacao)
@@ -44,7 +43,7 @@ namespace SistemaFinanceiro.Domain.Entities
         {
             if (fkCategoria <= 0)
             {
-                DomainValidationException.When(true, "CATEGORIA INVÁLIDA");
+                AddNotification(new Notification("FK_Categoria", "CATEGÓRIA É OBRIGATÓRIA"));
                 return;
             }
 
@@ -66,7 +65,7 @@ namespace SistemaFinanceiro.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(descricao))
             {
-                DomainValidationException.When(true, "DESCRIÇÃO OBRIGATÓRIA");
+                AddNotification(new Notification("Descriçao", "DESCRIÇÃO É OBRIGATÓRIA"));
                 return;
             }
 
@@ -90,7 +89,8 @@ namespace SistemaFinanceiro.Domain.Entities
         {
             if (valor == 0.0m)
             {
-                DomainValidationException.When(true, "VALOR NÃO PREENCHIDO");
+                AddNotification(new Notification("Valor", "VALOR NÃO PREENCHIDO"));
+                return;
             }
 
             if (valor == Valor)
@@ -99,10 +99,9 @@ namespace SistemaFinanceiro.Domain.Entities
             Valor = valor;
         }
 
-        public void Validar()
+        public override bool Validar()
         {
-            if (DomainValidationException.TemExcecao())
-                throw new AggregateException(DomainValidationException.Notificacoes);
+            return IsValid;
         }
     }
 }

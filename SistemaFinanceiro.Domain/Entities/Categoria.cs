@@ -20,7 +20,7 @@ namespace SistemaFinanceiro.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(nome))
             {
-                DomainValidationException.When(true, "NOME DA CATEGORIA OBRIGATÓRIA");
+                AddNotification(new Notification("Nome", "NOME É OBRIGATÓRIO"));
                 return;
             }
 
@@ -30,10 +30,9 @@ namespace SistemaFinanceiro.Domain.Entities
             Nome = nome.ToUpper();
         }
 
-        public void Validar()
+        public override bool Validar()
         {
-            if (DomainValidationException.TemExcecao())
-                throw new AggregateException(DomainValidationException.Notificacoes);
+            return IsValid;
         }
     }
 }
