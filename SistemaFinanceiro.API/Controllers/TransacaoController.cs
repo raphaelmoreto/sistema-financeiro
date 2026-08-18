@@ -29,7 +29,7 @@ namespace SistemaFinanceiro.API.Controllers
             }
         }
 
-        [HttpGet("busca-por-id")]
+        [HttpGet("busca/id")]
         public async Task<IActionResult> GetTransacoesPorId([FromQuery] int id)
         {
             try

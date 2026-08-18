@@ -55,19 +55,21 @@ namespace SistemaFinanceiro.Application.Services
             return categorias;
         }
 
-        public async Task<bool> CriarCategoria(CategoriaInputDto categoriaInputDto)
+        public async Task<IResponseService> CriarCategoria(CategoriaInputDto categoriaInputDto)
         {
             var categoria = new Categoria(categoriaInputDto.Nome);
+            if (!categoria.Validar())
+                return ResponseService.Erro("ERRO DE VALIDAÇÃO", categoria.Notificacoes.Select(x => x.Message));
 
             var varificacao = await categoriaRepository.GetByName(categoria.Nome);
             if (varificacao)
-                throw new InvalidOperationException($"CATEGORIA {categoria.Nome} JÁ CADASTRADA NO BANCO");
+                return ResponseService.Erro($"CATEGORIA {categoria.Nome} JÁ CADASTRADA NO BANCO");
 
             var result = await categoriaRepository.Insert(categoria);
             if (!result)
-                throw new Exception("ERRO");
+                return ResponseService.Erro("ERRO AO INSERIR NO BANCO!");
 
-            return result;
+            return ResponseService.Ok("CATEGORIA INSERIDA COM SUCESSO");
         }
 
         public async Task<bool> DeletarCategoria(int id)

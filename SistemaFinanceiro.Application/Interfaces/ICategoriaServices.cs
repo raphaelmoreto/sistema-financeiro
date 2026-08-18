@@ -10,7 +10,7 @@ namespace SistemaFinanceiro.Application.Interfaces
 
         Task<IEnumerable<CategoriaOutputDto>> BuscarCategorias();
 
-        Task<bool> CriarCategoria(CategoriaInputDto categoriaInputDto);
+        Task<IResponseService> CriarCategoria(CategoriaInputDto categoriaInputDto);
 
         Task<bool> DeletarCategoria(int id);
     }

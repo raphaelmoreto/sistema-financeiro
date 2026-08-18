@@ -29,7 +29,7 @@ namespace SistemaFinanceiro.API.Controllers
             }
         }
 
-        [HttpGet("busca-por-id")]
+        [HttpGet("busca/id")]
         public async Task<IActionResult> GetCategoriaPorId([FromQuery] int id)
         {
             try
@@ -63,6 +63,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await categoriaServices.CriarCategoria(categoriaInputDto);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (AggregateException aggEx)

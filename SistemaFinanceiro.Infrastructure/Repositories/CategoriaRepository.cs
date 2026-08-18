@@ -22,6 +22,21 @@ namespace SistemaFinanceiro.Infrastructure.Repositories
             return await connection.QuerySingleAsync<int>(sb.ToString(), new { Categoria = nome }) > 0;
         }
 
+        public async override Task<bool> Insert(Categoria categoria)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("INSERT INTO [dbo].[Categoria] ([nome])");
+            sb.AppendLine("SELECT @nomeCategoria");
+            sb.AppendLine("WHERE NOT EXISTS (");
+            sb.AppendLine("	        SELECT [id]");
+            sb.AppendLine("     	FROM [dbo].[Categoria] AS autor");
+            sb.AppendLine("     	WHERE autor.nome = @nomeCategoria");
+            sb.AppendLine(")");
+
+            var connection = CreateConnection();
+            return await connection.ExecuteAsync(sb.ToString(), new { nomeCategoria = categoria.Nome}) > 0;
+        }
+
         public async Task<IEnumerable<CategoriaOutputDto>> ListCategorias()
         {
             StringBuilder sb = new StringBuilder();

@@ -3,7 +3,7 @@ namespace SistemaFinanceiro.Domain.Validation
 {
     public abstract class Notifiable<T> where T : Notification
     {
-        private List<T> Notificacoes = new List<T>();
+        public List<T> Notificacoes { get; protected set; } = new List<T>();
 
         public void AddNotification(T notification)
         {
@@ -21,9 +21,9 @@ namespace SistemaFinanceiro.Domain.Validation
             }
         }
 
-        public IReadOnlyCollection<T> GetNotifications()
-        {
-            return Notificacoes;
-        }
+        //public IReadOnlyCollection<T> GetNotifications()
+        //{
+        //    return Notificacoes;
+        //}
     }
 }

@@ -13,7 +13,6 @@ namespace SistemaFinanceiro.Domain.Entities
         public Categoria(string nome)
         {
             AtribuirNome(nome);
-            Validar();
         }
 
         public void AtribuirNome(string nome)
