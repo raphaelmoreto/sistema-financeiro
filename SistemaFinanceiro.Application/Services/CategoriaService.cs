@@ -14,42 +14,37 @@ namespace SistemaFinanceiro.Application.Services
             this.categoriaRepository = categoriaRepository;
         }
 
-        public async Task<bool> AtualizarCategoria(int id,CategoriaInputDto categoriaInputDto)
+        public async Task<IResponseService> AtualizarCategoria(int id, CategoriaInputDto categoriaInputDto)
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO"); //O VALOR DO ID É VÁLIDO, MAS NÃO ESTÁ DENTRO DO INTERVALO MAIOR QUE '0'
+                return ResponseService.Erro("ID DEVE SER MAIOR QUE ZERO"); //O VALOR DO ID É VÁLIDO, MAS NÃO ESTÁ DENTRO DO INTERVALO MAIOR QUE '0'
 
             var varificacao = await categoriaRepository.GetByName(categoriaInputDto.Nome);
             if (varificacao)
-                throw new InvalidOperationException($"CATEGORIA {categoriaInputDto.Nome} JÁ CADASTRADA NO BANCO");
+                return ResponseService.Erro($"CATEGORIA {categoriaInputDto.Nome} JÁ CADASTRADA NO BANCO");
 
             var categoria = await categoriaRepository.GetById(id);
             if (categoria == null)
-                throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!"); //OBJETO NÃO EXISTE
+                return ResponseService.Erro("CATEGORIA NÃO ENCONTRADA!"); //OBJETO NÃO EXISTE
 
             categoria.AtribuirNome(categoriaInputDto.Nome);
-            categoria.Validar();
+            if (!categoria.Validar())
+                return ResponseService.Erro("ERRO DE VALIDAÇÃO!", categoria.Notificacoes.Select(x => x.Message));
 
             var result = await categoriaRepository.Update(categoria);
             if (!result)
-                throw new Exception("ERRO");
+                return ResponseService.Erro("ERRO AO ATUALIZAR CATEGORIA!");
 
-            return result;
+            return ResponseService.Ok("CATEGORIA ATUALIZADA COM SUCESSO");
         }
 
-        public async Task<CategoriaOutputDto> BuscarCategoriaPorId(int id)
+        public async Task<CategoriaOutputDto?> BuscarCategoriaPorId(int id)
         {
-            if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
-
             var categoria = await categoriaRepository.SearchCategoriaById(id);
-            if (categoria == null)
-                throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
-
             return categoria;
         }
 
-        public async Task<IEnumerable<CategoriaOutputDto>> BuscarCategorias()
+        public async Task<IEnumerable<CategoriaOutputDto?>> BuscarCategorias()
         {
             var categorias = await categoriaRepository.ListCategorias();
             return categorias;
@@ -72,20 +67,20 @@ namespace SistemaFinanceiro.Application.Services
             return ResponseService.Ok("CATEGORIA INSERIDA COM SUCESSO");
         }
 
-        public async Task<bool> DeletarCategoria(int id)
+        public async Task<IResponseService> DeletarCategoria(int id)
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+                return ResponseService.Erro("ID DEVE SER MAIOR QUE ZERO");
 
             var categoria = await categoriaRepository.GetById(id);
             if (categoria == null)
-                throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
+                return ResponseService.Erro("CATEGORIA NÃO ENCONTRADA!");
 
             var result = await categoriaRepository.Delete(categoria);
             if (!result)
-                throw new Exception("ERRO");
+                return ResponseService.Erro("ERRO AO DELETAR NO BANCO!");
 
-            return result;
+            return ResponseService.Ok("CATEGORIA DELETADA COM SUCESSO");
         }
     }
 }

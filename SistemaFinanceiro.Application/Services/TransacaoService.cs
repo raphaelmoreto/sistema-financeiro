@@ -14,47 +14,44 @@ namespace SistemaFinanceiro.Application.Services
             this.transacaoRepository = transacaoRepository;
         }
 
-        public async Task<bool> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto)
+        public async Task<IResponseService> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto)
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+                return ResponseService.Erro("ID DEVE SER MAIOR QUE ZERO");
 
             var transacao = await transacaoRepository.GetById(id);
             if (transacao == null)
-                throw new ArgumentNullException("CATEGORIA NÃO ENCONTRADA!");
+                return ResponseService.Erro("CATEGORIA NÃO ENCONTRADA!");
 
             transacao.AtribuirDescricao(transacaoInputDto.Descricao);
             transacao.AtribuirCategoria(transacaoInputDto.FkCategoria);
             transacao.AtribuirValor(transacaoInputDto.Valor);
-            transacao.Validar();
+
+            if (!transacao.Validar())
+                return ResponseService.Erro("ERRO DE VALIDAÇÃO", transacao.Notificacoes.Select(x => x.Message));
+
             transacao.AtribuirNatureza();
 
             var result = await transacaoRepository.Update(transacao);
             if (!result)
-                throw new Exception("ERRO!");
+                return ResponseService.Erro("ERRO AO ATUALIZAR CATEGORIA!");
 
-            return result;
+            return ResponseService.Ok("CATEGORIA ATUALIZADA COM SUCESSO");
         }
 
-        public async Task<TransacaoOutputDto> BuscarTransacaoPorId(int id)
+        public async Task<TransacaoOutputDto?> BuscarTransacaoPorId(int id)
         {
-            if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
-
             var transacao = await transacaoRepository.SearchTransacaoById(id);
-            if (transacao == null)
-                throw new ArgumentNullException("TRANSAÇÃO NÃO ENCONTRADA!");
-
             return transacao;
         }
 
-        public async Task<IEnumerable<TransacaoOutputDto>> BuscarTransacoes()
+        public async Task<IEnumerable<TransacaoOutputDto?>> BuscarTransacoes()
         {
             var transacoes = await transacaoRepository.ListTransacoes();
             return transacoes;
         }
 
-        public async Task<bool> CriarTransacao(TransacaoInputDto transacaoInputDto)
+        public async Task<IResponseService> CriarTransacao(TransacaoInputDto transacaoInputDto)
         {
             var transacao = new Transacao
             (
@@ -63,27 +60,30 @@ namespace SistemaFinanceiro.Application.Services
                 transacaoInputDto.Valor
             );
 
+            if (!transacao.Validar())
+                return ResponseService.Erro("ERRO DE VALIDAÇÃO", transacao.Notificacoes.Select(x => x.Message));
+
             var result = await transacaoRepository.Insert(transacao);
             if (!result)
-                throw new Exception("ERRO!");
+                return ResponseService.Erro("ERRO AO INSERIR TRANSAÇÃO!");
 
-            return result;
+            return ResponseService.Ok("TRANSAÇÃO INSERIDA COM SUCESSO");
         }
 
-        public async Task<bool> DeleteTransacao(int id)
+        public async Task<IResponseService> DeleteTransacao(int id)
         {
             if (id <= 0)
-                throw new ArgumentOutOfRangeException("ID DEVE SER MAIOR QUE ZERO");
+                return ResponseService.Erro("ID DEVE SER MAIOR QUE ZERO");
 
             var transacao = await transacaoRepository.GetById(id);
             if (transacao == null)
-                throw new ArgumentNullException("TRANSAÇÃO NÃO ENCONTRADA!");
+                return ResponseService.Erro("TRANSAÇÃO NÃO ENCONTRADA!");
 
             var result = await transacaoRepository.Delete(transacao);
             if (!result)
-                throw new Exception("ERRO!");
+                return ResponseService.Erro("ERRO AO DELETAR TRANSAÇÃO!");
 
-            return result;
+            return ResponseService.Ok("TRANSAÇÃO DELETADA COM SUCESSO");
         }
     }
 }

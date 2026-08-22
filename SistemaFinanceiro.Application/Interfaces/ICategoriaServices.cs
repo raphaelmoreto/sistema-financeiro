@@ -4,14 +4,14 @@ namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface ICategoriaServices
     {
-        Task<bool> AtualizarCategoria(int id, CategoriaInputDto categoriaInputDto);
+        Task<IResponseService> AtualizarCategoria(int id, CategoriaInputDto categoriaInputDto);
 
-        Task<CategoriaOutputDto> BuscarCategoriaPorId(int id);
+        Task<CategoriaOutputDto?> BuscarCategoriaPorId(int id);
 
-        Task<IEnumerable<CategoriaOutputDto>> BuscarCategorias();
+        Task<IEnumerable<CategoriaOutputDto?>> BuscarCategorias();
 
         Task<IResponseService> CriarCategoria(CategoriaInputDto categoriaInputDto);
 
-        Task<bool> DeletarCategoria(int id);
+        Task<IResponseService> DeletarCategoria(int id);
     }
 }

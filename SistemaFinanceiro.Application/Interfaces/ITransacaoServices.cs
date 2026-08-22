@@ -4,14 +4,14 @@ namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface ITransacaoServices
     {
-        Task<bool> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto);
+        Task<IResponseService> AtualizarTransacao(int id, TransacaoInputDto transacaoInputDto);
 
-        Task<TransacaoOutputDto> BuscarTransacaoPorId(int id);
+        Task<TransacaoOutputDto?> BuscarTransacaoPorId(int id);
 
-        Task<IEnumerable<TransacaoOutputDto>> BuscarTransacoes();
+        Task<IEnumerable<TransacaoOutputDto?>> BuscarTransacoes();
 
-        Task<bool> CriarTransacao(TransacaoInputDto transacaoInputDto);
+        Task<IResponseService> CriarTransacao(TransacaoInputDto transacaoInputDto);
 
-        Task<bool> DeleteTransacao(int id);
+        Task<IResponseService> DeleteTransacao(int id);
     }
 }

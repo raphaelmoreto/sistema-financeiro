@@ -24,9 +24,6 @@ namespace SistemaFinanceiro.Domain.Entities
             AtribuirDescricao(descricao);
             AtribuirCategoria(fkCategoria);
             AtribuirValor(valor);
-
-            Validar();
-
             AtribuirNatureza();
         }
 

@@ -21,6 +21,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await categoriaServices.DeletarCategoria(id);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,6 +38,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await categoriaServices.BuscarCategoriaPorId(id);
+                if (result == null)
+                    return NoContent();
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -49,6 +55,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await categoriaServices.BuscarCategorias();
+                if (result == null)
+                    return NoContent();
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -85,6 +94,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await categoriaServices.AtualizarCategoria(id, categoriaInputDto);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (AggregateException aggEx)

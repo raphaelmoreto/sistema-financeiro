@@ -21,6 +21,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await transacaoServices.DeleteTransacao(id);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -35,6 +38,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await transacaoServices.BuscarTransacaoPorId(id);
+                if (result == null)
+                    return NoContent();
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -49,6 +55,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await transacaoServices.BuscarTransacoes();
+                if (result == null)
+                    return NoContent();
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -63,6 +72,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await transacaoServices.CriarTransacao(transacaoInputDto);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (AggregateException aggEx)
@@ -82,6 +94,9 @@ namespace SistemaFinanceiro.API.Controllers
             try
             {
                 var result = await transacaoServices.AtualizarTransacao(id, transacaoInputDto);
+                if (!result.Sucesso)
+                    return BadRequest(new { mensagem = result.Mensagem, notificacoes = result.Notificacoes });
+
                 return Ok(result);
             }
             catch (AggregateException aggEx)

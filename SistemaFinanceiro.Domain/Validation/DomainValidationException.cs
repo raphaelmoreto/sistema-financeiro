@@ -2,7 +2,7 @@
 namespace SistemaFinanceiro.Domain.Validation
 {
     //==================================================
-    // MÉTODO ANTIGO DE VALIDAÇÃO DE ENTIDADES. DEIXE DE USAR PORQUE MÉTODOS "static" FAZ PERTENCE A PRÓPRIA CLASSE E NÃO A UM OBJETO OU INTÂNCIA ESPECIFICA. SENDO ASSIM, "Notificacoes" PODIA RETORNAR MENSAGENS DE ENTIDADES DIFERENTES
+    // MÉTODO ANTIGO DE VALIDAÇÃO DE ENTIDADES. DEIXEI DE USAR PORQUE MÉTODOS "static" PERTENCE A PRÓPRIA CLASSE E NÃO A UM OBJETO OU INTÂNCIA ESPECIFICA. SENDO ASSIM, "Notificacoes" PODIA RETORNAR MENSAGENS DE ENTIDADES DIFERENTES
     //==================================================
     public class DomainValidationException : Exception
     {

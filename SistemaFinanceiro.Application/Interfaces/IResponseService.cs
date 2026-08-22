@@ -1,5 +1,4 @@
-﻿using SistemaFinanceiro.Domain.Validation;
-
+﻿
 namespace SistemaFinanceiro.Application.Interfaces
 {
     public interface IResponseService
